@@ -209,9 +209,17 @@ async function rowTexts(page) {
 const cellExact = (page, text) => page.locator('table.data tbody').getByText(text, { exact: true });
 const rowOf = (page, text) => page.locator('table.data tbody tr').filter({ has: page.getByText(text, { exact: true }) });
 async function expectAllRowsContain(page, kw) {
-  const rows = await rowTexts(page);
-  expect(rows.length).toBeGreaterThan(0);
-  for (const r of rows) expect(r).toContain(kw.toLowerCase());
+  const k = kw.toLowerCase();
+  // Poll: chờ bảng render lại theo bộ lọc rồi mới kiểm tra (tránh race condition/flaky)
+  await expect
+    .poll(
+      async () => {
+        const rows = await rowTexts(page);
+        return rows.length > 0 && rows.every((r) => r.includes(k));
+      },
+      { message: `Tất cả các hàng phải chứa "${kw}"`, timeout: 15000, intervals: [250, 500, 1000] }
+    )
+    .toBe(true);
 }
 const noRecords = (page) => expect(page.getByText('No records found.').first()).toBeVisible();
 
