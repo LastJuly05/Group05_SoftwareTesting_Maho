@@ -1,6 +1,6 @@
 # Group05 - Maho
 
-Bài tập nhóm môn Kiểm thử phần mềm: phân tích, thiết kế test case và kế hoạch automation test cho website **Thiên Long Shop** (https://thienlong.vn).
+Bài tập nhóm môn Kiểm thử phần mềm: phân tích, thiết kế test case và kế hoạch automation test cho website "https://demo.mahocommerce.com/admin2941834/dashboard/index/key/85f6fec80f980775ed6b6f4eda3e72f2/"
 
 ## Thành viên
 
